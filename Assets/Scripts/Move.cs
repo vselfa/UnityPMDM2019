@@ -12,6 +12,8 @@ public class Move : MonoBehaviour {
 
    // public Text missatge;
    public Text message; 
+   private int numCollisions = 0;
+   private AudioSource audioSource;
   
    // Use this for initialization
    void Start () {
@@ -19,25 +21,36 @@ public class Move : MonoBehaviour {
  	   rigidBody = GetComponent<Rigidbody>();  
       // Showing a text into the console
       Debug.Log("Starting the game -------------------");
+      audioSource = GetComponent<AudioSource>();
    } 
 
    // Update is called once per frame
    void Update () {
       // 3.- Using rigidBody every time. Pay attention to the mass of the object!
       if (Input.GetAxis("Horizontal") != 0 ) {
-         message.text= "Moving with Left / Right arrows";
+         // ShowText= "Moving with Left / Right arrows";
       }
       if (Input.GetAxis("Vertical") != 0) {
-         message.text = "Moving with Up / Down arrows";
+         // ShowText = "Moving with Up / Down arrows";
       }
            
-      rigidBody.AddForce(new Vector3 (
-                                          Input.GetAxis("Horizontal")* forceValue,
-                                          0, 
-                                          Input.GetAxis("Vertical")* forceValue
-                                       )
-                           );
+      rigidBody.AddForce(new Vector3 ( Input.GetAxis("Horizontal")* forceValue,
+                                       0, 
+                                       Input.GetAxis("Vertical")* forceValue ) );
    }
+
+   void OnCollisionEnter(Collision other) {
+        numCollisions++;
+        ShowText("Collision number: " + numCollisions);
+        audioSource.Play();
+        if (other.gameObject.tag == "Door") {
+            ShowText("Collision to the door");
+        }
+    }
+
+    void ShowText(String aux ) {
+        message.text = aux;
+    }
 
 }
 

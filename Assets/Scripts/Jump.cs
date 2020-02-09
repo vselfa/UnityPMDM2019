@@ -13,17 +13,22 @@ public class Jump : MonoBehaviour {
     // The attribute to control the text
     // public Text missatge;
     public Text message; 
+   	private AudioSource audioSource;
+
 
     // Start is called before the first frame update
     void Start()    {
         rigidBody = GetComponent<Rigidbody>();    
         ShowText("Ready to jump. Press space bar");
+        audioSource = GetComponent<AudioSource>();
+
     }
 
    void Update () {
         if (Input.GetButtonDown("Jump") && Mathf.Abs (rigidBody.velocity.y) < 0.01f) {
             ShowText("Jumping");
             rigidBody.AddForce(Vector3.up * jumpValue, ForceMode.Impulse);
+            audioSource.Play();
         }
     }
 
