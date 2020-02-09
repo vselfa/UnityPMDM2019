@@ -19,14 +19,13 @@ public class DetectCollision : MonoBehaviour {
     // Update is called once per frame
     void Update()     {     }
 
-    /*void OnTriggerEnter(Collider other) {
-        print("OnTriggerEnter!!");
+    void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Border")   {
             ShowText("Danger: Near the border!!");
             print("Danger: Near the border!!!!");
         }
     }
-    */
+    
 
     void OnCollisionEnter(Collision other) {
         numCollisions++;
